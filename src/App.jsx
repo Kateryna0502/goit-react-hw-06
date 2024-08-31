@@ -7,12 +7,16 @@ import ContactForm from './components/ContactForm/ContactForm.jsx'
 import dataFromArray from "./contacts.json"
 
 import { nanoid } from 'nanoid'
+import { useDispatch, useSelector } from 'react-redux'
+import { addProfile, deleteProfile } from './redux/profiles/profileReducer.js'
 
 function App() {
-  const [users, setUsers] = useState(() => {
-    const localData = localStorage.getItem("users");
-    return localData ? JSON.parse(localData) : dataFromArray;
-  });
+  // const [users, setUsers] = useState(() => {
+  //   const localData = localStorage.getItem("users");
+  //   return localData ? JSON.parse(localData) : dataFromArray;
+  // });
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.profiles.profiles);
   
   const [filterValue, setFilterValue] = useState("");
   const onAddContact = (contact) => {
@@ -21,12 +25,13 @@ function App() {
       id: nanoid(),
     };
 
-    setUsers([finalContact, ...users]);
+    // setUsers([finalContact, ...users]);
+    dispatch(addProfile(finalContact));
   };
-  const onDeleteContact = (contactId) => {
-    
+  const onDeleteContact = (profileId) => {
+    dispatch(deleteProfile(profileId));
 
-    setUsers(users.filter((item) => item.id !== contactId));
+    // setUsers(users.filter((item) => item.id !== contactId));
   };
 
   const handleFilter = (event) => {
