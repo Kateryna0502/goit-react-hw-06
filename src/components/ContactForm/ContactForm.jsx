@@ -1,6 +1,8 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import css from "./ContactForm.module.css"
+import { useDispatch } from "react-redux";
+import { addProfile } from "../../redux/profiles/profileReducer";
 
 
 
@@ -26,15 +28,19 @@ const INITIAL_VALUES = {
   
 };
 
-const ContactForm = ({ onAddContact }) => {
-  const handleSubmit = (values, actions) => {
-    const contactObject = {
-      name: values.contactName,
-      number: values.contactNumber,
-      
-    };
+const ContactForm = () => {
+  const dispatch = useDispatch();
 
-    onAddContact(contactObject);
+  const handleSubmit = (values, actions) => {
+    dispatch(
+      addProfile({
+        name: values.contactName,
+        number: values.contactNumber,
+      
+      })
+    ); 
+
+    
 
     console.log(values);
     actions.resetForm();
