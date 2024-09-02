@@ -11,11 +11,11 @@ import { nanoid } from "nanoid";
 const phoneRegExp = /^[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$/;
 
 const ContactValidationSchema = Yup.object().shape({
-    contactName: Yup.string()
+    name: Yup.string()
         .required("Ім'я профілю є обов'язковим")
         .min(3, "Ім'я профілю має бути мінімум в 3 символи")
         .max(50, "Ім'я профілю має бути меншим за 50 символів"),
-    contactNumber: Yup.string()
+    number: Yup.string()
         .matches(
             phoneRegExp,
             "Номер телефону має співпадати з форматом 'xxx-xxx-xx-xx'"
@@ -25,8 +25,8 @@ const ContactValidationSchema = Yup.object().shape({
 })
 
 const INITIAL_VALUES = {
-  contactName: "",
-  contactNumber: "",
+  name: "",
+  number: "",
   
 };
 
@@ -67,13 +67,13 @@ const ContactForm = () => {
           <span>Name</span>
           <Field
             type="text"
-            name="contactName"
+            name="name"
             placeholder="Микола Зозуля"
             
           />
           <ErrorMessage
             className={css.errorText}
-            name="contactName"
+            name="name"
             component="span"
           />
         </label>
@@ -82,13 +82,13 @@ const ContactForm = () => {
           <span>Number</span>
           <Field
             type="tel"
-            name="contactNumber"
+            name="number"
             placeholder="+(38)0501234567"
             
           />
           <ErrorMessage
             className={css.errorText}
-            name="contactNumber"
+            name="number"
             component="span"
           />
         </label>
