@@ -2,7 +2,9 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import css from "./ContactForm.module.css"
 import { useDispatch } from "react-redux";
-import { addProfile } from "../../redux/profiles/profileReducer";
+
+import { addContact } from "../../redux/contactsSlice";
+import { nanoid } from "nanoid";
 
 
 
@@ -31,25 +33,32 @@ const INITIAL_VALUES = {
 const ContactForm = () => {
   const dispatch = useDispatch();
 
-  const handleSubmit = (values, actions) => {
-    dispatch(
-      addProfile({
-        name: values.contactName,
-        number: values.contactNumber,
-      
-      })
-    ); 
+  const onAddContact = (contact, actions) => {
+    const finalContact = {
+      ...contact,
+      id: nanoid(),
+    };
 
-    
+    // setUsers([finalContact, ...users]);
+    dispatch(addContact(finalContact));
 
-    console.log(values);
     actions.resetForm();
   };
+
+    
+  // const handleSubmit = (values, actions) => {
+  //   dispatch(
+  //     addProfile({
+  //       name: values.contactName,
+  //       number: values.contactNumber,
+      
+  //     })
+    
 
   return (
     <Formik
       initialValues={INITIAL_VALUES}
-      onSubmit={handleSubmit}
+      onSubmit={onAddContact}
       validationSchema={ContactValidationSchema}
     >
       
